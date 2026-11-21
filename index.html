@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="lo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>ຄູ່ມືເລີ່ມຕົ້ນຮຽນຮູ້ Arduino UNO R3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Lao:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eeede9;--sheet:#fff;--ink:#1e2022;--muted:#4b5056;--line:#d6d4ce;--soft:#f7f6f3;--accent:#6f7b78}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans Lao",sans-serif;font-size:15px;line-height:1.85}
+.sheet{max-width:820px;margin:30px auto;background:var(--sheet);border:1px solid var(--line);padding:56px 66px 48px;box-shadow:0 2px 12px #25231c0b}
+h1,h2,h3,h4,p{margin-top:0}h1{font-size:30px;line-height:1.55;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}h2{font-size:22px;line-height:1.55;margin:0 0 20px;padding-top:8px;border-top:2px solid var(--accent);font-weight:700}h3{font-size:19px;line-height:1.6;margin:0 0 15px;font-weight:700}h4{font-size:15px;margin:22px 0 8px;color:var(--ink)}p{margin-bottom:14px}.subtitle{color:var(--muted);font-size:16px;margin-bottom:24px}.intro{font-size:16px}.note{border-left:3px solid #89938f;background:var(--soft);padding:14px 18px;color:#383d40;margin:24px 0}.contact{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:12px;margin-top:25px}.contact span{display:inline-block;margin-right:18px}
+section{margin-top:48px;break-inside:auto}.lesson{padding-top:27px;border-top:1px solid var(--line);margin-top:35px}.lesson h3{font-size:18px}.label{font-weight:600}.parts{margin:0 0 14px}.wiring{margin-top:16px}.table-wrap{overflow-x:auto;margin:12px 0 20px}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.65}th,td{padding:9px 10px;text-align:left;vertical-align:top;border:1px solid var(--line)}th{background:#f3f2ee;font-weight:600}tbody tr:nth-child(even){background:#fcfbf9}
+.slot{position:relative;border:1px dashed #c7c5bf;background:#fbfaf8;color:#656a6c;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;margin:12px 0 20px;min-height:130px}.slot.wide{aspect-ratio:17/11;min-height:180px}.slot.setup{aspect-ratio:17/4;min-height:100px}.slot.faq1{aspect-ratio:17/8;min-height:150px}.slot.faq2{aspect-ratio:17/5;min-height:110px}.slot-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.slot.half{aspect-ratio:8/9.5;min-height:150px;margin:8px 0 16px}.slot-placeholder{display:flex;flex-direction:column;align-items:center;gap:5px;padding:18px;max-width:100%;font-size:13px;line-height:1.65}.slot-placeholder small{font-family:"JetBrains Mono",monospace;font-size:11px;color:#858987}.slot-symbol{font-size:22px;color:#9a9d99}.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fbfaf8}.slot img:not([hidden])~.slot-placeholder{display:none}.slot-controls{display:none;position:absolute;right:8px;top:8px;gap:6px}.slot-controls button{border:1px solid #c8c7c0;background:#fff;color:#222;padding:5px 9px;font-family:inherit;font-size:12px;cursor:pointer}.codebox{margin:14px 0 20px;border:1px solid #d9d8d3;background:#f7f7f5}.codehead{display:flex;justify-content:flex-end;padding:6px 8px;border-bottom:1px solid #e4e3de}.copy{background:transparent;border:1px solid #d1d0ca;border-radius:2px;padding:4px 10px;color:#353a3d;font:13px "Noto Sans Lao",sans-serif;cursor:pointer}.copy:hover{background:#eeede8}pre{margin:0;padding:15px 17px;overflow:auto;font:12px/1.65 "JetBrains Mono",monospace;color:#242a2c;tab-size:2}code{font-family:"JetBrains Mono",monospace}.step{margin:13px 0}.step-title{font-weight:600}.principle{margin:18px 0}.challenge{font-weight:600}.edit-only{display:none}.edit-mode .edit-only{display:inline}.edit-mode .slot{cursor:pointer}.edit-mode .slot:hover .slot-controls,.edit-mode .slot:focus-within .slot-controls{display:flex}.slot.has-image .slot-placeholder{display:none}.edit-mode .slot.has-image img{display:block}.edit-mode .slot.has-image{border-style:solid}
+footer{margin-top:44px;padding-top:12px;border-top:1px solid var(--line);color:#777;font-size:12px;text-align:center}
+@media(max-width:700px){body{background:#fff;font-size:14px}.sheet{margin:0 auto;border:0;padding:32px 20px;box-shadow:none}h1{font-size:24px}h2{font-size:20px}h3{font-size:17px}.slot-pair{gap:8px}.slot.half{min-height:115px}.slot.wide{min-height:150px}pre{font-size:11px;padding:12px}.slot-placeholder{font-size:11px;padding:10px}}
+@media print{body{background:#fff}.sheet{max-width:none;margin:0;border:0;box-shadow:none;padding:12mm 13mm}.copy,.slot-controls{display:none!important}section{break-before:auto}.lesson{break-inside:avoid}a{color:inherit;text-decoration:none}.slot{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<script id="embedded-images" type="application/json">{}</script>
+<main class="sheet">
+<header><h1>ຄູ່ມືເລີ່ມຕົ້ນຮຽນຮູ້ Arduino UNO R3</h1><p class="subtitle">ສຳລັບຊຸດເລີ່ມຕົ້ນ: Kit A — Arduino Starter (8 ບົດຮຽນພື້ນຖານ)</p><p class="intro">ຄູ່ມືສະບັບນີ້ຖືກອອກແບບມາເພື່ອໃຫ້ນັກຮຽນ, ນັກສຶກສາ ແລະ ຜູ້ເລີ່ມຕົ້ນສາມາດຮຽນຮູ້ການຕໍ່ວົງຈອນໄຟຟ້າ ແລະ ການຂຽນໂຄ້ດຄວບຄຸມບອດໄມໂຄຣຄອນໂທຣເລີ Arduino UNO R3 ໄດ້ດ້ວຍຕົນເອງແບບເປັນຂັ້ນເປັນຕອນ. ທຸກບົດຮຽນຈະພາລົງມືເຮັດຕັ້ງແຕ່ການເປີດ-ປິດໄຟພື້ນຖານ ຈົນເຖິງການນຳໃຊ້ເຊັນເຊີວັດໄລຍະທາງ, ມໍເຕີເຊີໂວ ແລະ ການສ້າງໂປຣເຈັກລວມທີ່ໃຊ້ງານໄດ້ແທ້.</p><aside class="note">ຄຳແນະນຳ: ທ່ານສາມາດເປີດອ່ານຄູ່ມືນີ້ໃນໂທລະສັບໄດ້ ແຕ່ ແນະນຳໃຫ້ເປີດເທິງຄອມພິວເຕີ ເວລາລົງມືເຮັດ ເພື່ອຈະສາມາດກັອບປີ້ໂຄ້ດໄປວາງໃສ່ໂປຣແກຣມ Arduino IDE ໄດ້ສະດວກ ແລະ ໄວຂຶ້ນ. (ຖ້າເປີດໃນມືຖື ໃຫ້ກົດເປີດຜ່ານເບຣົາເຊີ ຫຼື ພິມລິ້ງສັ້ນເຂົ້າຄອມພິວເຕີ: [ໃສ່ລິ້ງສັ້ນ / URL ທີ່ນີ້])</aside><div class="contact"><span>ຊ່ອງທາງຕິດຕໍ່: TikTok: Arduidui Maker</span><span>Whatapp: 20 52479644</span></div></header>
+<section><h2>ພາກທີ 2: ລາຍການອຸປະກອນພາຍໃນກ່ອງ <span lang="en">(What's in the Box)</span></h2>
+<div class="slot wide" data-slot="kit-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບລວມອຸປະກອນ (1-13): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 11 ຊມ. (ແນວນອນ 16:9 ຫຼື 4:3)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບລວມອຸປະກອນ (1-13): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 11 ຊມ. (ແນວນອນ 16:9 ຫຼື 4:3)</span><small>~17 × 11 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="table-wrap"><table><thead><tr><th>ລຳດັບ</th><th>ຊື່ອຸປະກອນ</th><th>ຈຳນວນ</th><th>ໜ້າທີ່ ແລະ ການນຳໃຊ້ຫຍໍ້</th></tr></thead><tbody><tr><td>1</td><td>ບອດ Arduino UNO R3 (CH340) + ສາຍ USB</td><td>1 ຊຸດ</td><td>ສະໝອງກົນຫຼັກສຳລັບຮັບສັນຍານ ປະມວນຜົນ ແລະ ສັ່ງງານອຸປະກອນຕ່າງໆ ພ້ອມສາຍເຊື່ອມຕໍ່ຄອມພິວເຕີ</td></tr><tr><td>2</td><td>ເບຣດບອດ 400 ຮູ (MB-102 Mini)</td><td>1 ແຜ່ນ</td><td>ແຜ່ນສຽບອຸປະກອນ ແລະ ສາຍໄຟທົດລອງວົງຈອນ</td></tr><tr><td>3</td><td>ສາຍຈຳເປີ ຜູ້-ຜູ້ (Male-to-Male / M-M) 20 ຊມ.</td><td>20 ເສັ້ນ</td><td>ສາຍສຽບເຊື່ອມຕໍ່ລະຫວ່າງອູປະກອນ</td></tr><tr><td>4</td><td>ສາຍຈຳເປີ ຜູ້-ເມຍ (Male-to-Female / M-F) 20 ຊມ.</td><td>20 ເສັ້ນ</td><td>ສາຍສຽບເຊື່ອມຕໍ່ລະຫວ່າງອູປະກອນ</td></tr><tr><td>5</td><td>ຫຼອດ LED ຂະໜາດ 5mm ຄະລະສີ (ແດງ, ເຫຼືອງ, ຂຽວ)</td><td>15 ດວງ</td><td>ຫຼອດໄຟສະແດງຜົນ ໃຊ້ຝຶກສັ່ງເປີດ-ປິດ, ສັນຍານໄຟ ແລະ ປັບຄວາມສະຫວ່າງ</td></tr><tr><td>6</td><td>ຕົວຕ້ານທານ (Resistor) 220Ω, 1kΩ, 10kΩ</td><td>30 ໂຕ</td><td>ຈຳກັດກະແສໄຟບໍ່ໃຫ້ LED ຂາດ (220Ω) ແລະ ໃຊ້ດຶງສັນຍານ Pull-down ກັບປຸ່ມກົດ (10kΩ)</td></tr><tr><td>7</td><td>ປຸ່ມກົດ Tactile Switch 6x6mm</td><td>4 ໂຕ</td><td>ສະວິດປຸ່ມກົດສຳລັບສົ່ງສັນຍານ Input ເຂົ້າບອດ Arduino</td></tr><tr><td>8</td><td>ໂພເທັນຊິໂອມີເຕີ (Potentiometer) 10kΩ</td><td>1 ໂຕ</td><td>ຕົວຕ້ານທານແບບໝຸນປັບຄ່າໄດ້ ສຳລັບທົດລອງສັນຍານ Analog (0-1023)</td></tr><tr><td>9</td><td>ບັຊເຊີແບບມີວົງຈອນໃນໂຕ Active Buzzer 5V</td><td>1 ໂຕ</td><td>ອຸປະກອນສົ່ງສຽງເຕືອນ ເມື່ອປ້ອນໄຟ 5V (HIGH) ຈະມີສຽງດັງທັນທີ</td></tr><tr><td>10</td><td>ເຊັນເຊີວັດໄລຍະທາງ Ultrasonic HC-SR04</td><td>1 ໂຕ</td><td>ສົ່ງຄື້ນອັລຕຣາໂຊນິກໄປສະທ້ອນວັດຖຸ ເພື່ອວັດແທກໄລຍະທາງເປັນຊັງຕີແມັດ (cm)</td></tr><tr><td>11</td><td>ເຊີໂວມໍເຕີ (Servo Motor) SG90 (180 ອົງສາ)</td><td>1 ໂຕ</td><td>ມໍເຕີຄວບຄຸມອົງສາການໝຸນໄດ້ແມ່ນຍຳ ໃຊ້ສຳລັບແຂນກົນ, ໄມ້ກັ້ນ ຫຼື ຝາຖັງຂີ້ເຫຍື້ອ</td></tr><tr><td>12</td><td>ກ່ອງພາດສະຕິກໃສມີຝາລັອກ</td><td>1 ກ່ອງ</td><td>ກ່ອງເກັບຮັກສາອຸປະກອນໃຫ້ເປັນລະບຽບ ປ້ອງກັນຝຸ່ນ ແລະ ການກະທົບ</td></tr></tbody></table></div></section>
+<section><h2>ພາກທີ 3: ການກຽມໂປຣແກມ ແລະ ໄດຣເວີກ່ອນເລີ່ມຕົ້ນ <span lang="en">(Quick Setup)</span></h2>
+<p class="step"><span class="step-title">Link:</span> <a href="https://www.arduino.cc/en/software`">https://www.arduino.cc/en/software`</a></p>
+<p class="step"><span class="step-title">Link:</span> <a href="https://sparks.gogo.co.nz/ch340.html?srsltid=AYCX9vJGb_Rq6Pbq62r0fTlJYJ-1Q0cz2HqazUoY_LXcOOgRKiwELoUp`">`CH340 Driver downloads`</a></p>
+<div class="slot setup" data-slot="setup-extra" aria-label="ຂະໜາດຊ່ອງວ່າງລິ້ງດາວໂຫຼດ / ຂໍ້ມູນເພີ່ມເຕີມ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 4 ຊມ.">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງລິ້ງດາວໂຫຼດ / ຂໍ້ມູນເພີ່ມເຕີມ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 4 ຊມ.</span><small>~17 × 4 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></section><section><h2>ພາກທີ 4: ເນື້ອຫາບົດຮຽນທັງ 8 ບົດ</h2>
+<article class="lesson" id="lesson-1"><h3>ບົດທີ 1: ໄຟກະພິບດວງທຳອິດ (Digital Output &amp; Blink)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ເຂົ້າໃຈໂຄງສ້າງຫຼັກຂອງໂຄ້ດ Arduino ຄື void setup() ແລະ void loop() ພ້ອມຮຽນຮູ້ການສັ່ງຈ່າຍໄຟ Digital Output (HIGH / LOW) ແລະ ການໜ່ວງເວລາດ້ວຍ delay().</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3 1 ບອດ, ເບຣດບອດ 1 ແຜ່ນ, ຫຼອດ LED 1 ດວງ, ຕົວຕ້ານທານ 220Ω 1 ໂຕ, ສາຍຈຳເປີ 2 ເສັ້ນ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-1-diagram" aria-label="ຊ່ອງໃສ່ຮູບວົງຈອນ LED ກະພິບ ບົດທີ 1 (ແຜນວົງຈອນ): ປະມານ 8 x 9.5 ຊມ.">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຮູບແຜນວົງຈອນ LED ກະພິບ (Digital Pin 13)</span><small>~8 × 9.5 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-1-photo" aria-label="ຊ່ອງໃສ່ຮູບວົງຈອນ LED ກະພິບ ບົດທີ 1 (ຮູບຕໍ່ຈິງ): ປະມານ 8 x 9.5 ຊມ.">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຮູບຕໍ່ວົງຈອນ LED ກະພິບຈິງ</span><small>~8 × 9.5 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>ຂາ Digital Pin 13 (UNO)</td><td>ຂາທີ 1 ຂອງຕົວຕ້ານທານ 220Ω</td><td>ສາຍສັນຍານສັ່ງເປີດ-ປິດໄຟ</td></tr><tr><td>ຂາທີ 2 ຂອງຕົວຕ້ານທານ 220Ω</td><td>ຂາຍາວ (Anode / +) ຂອງຫຼອດ LED</td><td>ຈຳກັດກະແສໄຟປ້ອງກັນ LED ຂາດ</td></tr><tr><td>ຂາສັ້ນ (Cathode / -) ຂອງຫຼອດ LED</td><td>ຂາ GND ຂອງບອດ Arduino UNO</td><td>ສາຍລົບ (Ground) ຄົບວົງຈອນ</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int ledPin = 13; // ກຳນົດຕົວແປ ledPin ໃຫ້ເກັບໝາຍເລກຂາ 13
+
+void setup() {
+  // ຟັງຊັນ setup() ຈະເຮັດວຽກພຽງຄັ້ງດຽວ ຕອນເປີດໄຟ ຫຼື ກົດ Reset
+  pinMode(ledPin, OUTPUT); // ຕັ້ງຄ່າຂາ 13 ເປັນ Output (ຂາສົ່ງໄຟອອກ)
+}
+
+void loop() {
+  // ຟັງຊັນ loop() ຈະເຮັດວຽກວົນຊ້ຳໄປເລື້ອຍໆ ຈົນກວ່າຈະປິດໄຟ
+  digitalWrite(ledPin, HIGH); // ສັ່ງຈ່າຍໄຟ 5V (HIGH) ໃຫ້ຫຼອດ LED ຕິດ
+  delay(1000);                // ໜ່ວງເວລາ 1000 ມິນລິວິນາທີ (ເທົ່າກັບ 1 ວິນາທີ)
+
+  digitalWrite(ledPin, LOW);  // ສັ່ງປິດໄຟ 0V (LOW) ໃຫ້ຫຼອດ LED ດັບ
+  delay(1000);                // ໜ່ວງເວລາ 1 ວິນາທີ ກ່ອນວົນກັບໄປເປີດໃໝ່
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ເມື່ອອັບໂຫຼດໂຄ້ດສຳເລັດ ບອດຈະປ່ອຍໄຟອອກຂາ 13 ເຮັດໃຫ້ LED ຕິດ 1 ວິນາທີ ແລ້ວດັບ 1 ວິນາທີ ສະຫຼັບກັນໄປເລື້ອຍໆ. Challenge: ລອງປ່ຽນຕົວເລກໃນ delay() ເປັນ 200 ເພື່ອໃຫ້ໄຟກະພິບໄວຂຶ້ນ ຫຼື ປ່ຽນໄປໃຊ້ຂາ 8 ແທນ.</p></article>
+<article class="lesson" id="lesson-2"><h3>ບົດທີ 2: ສັນຍານໄຟຈາລະຈອນ 3 ສີ (Multiple Outputs)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການຄວບຄຸມອຸປະກອນຫຼາຍຕົວພ້ອມກັນ (LED 3 ສີ) ຜ່ານຕົວຕ້ານທານ 220Ω ແລະ ຈັດລຳດັບເວລາການເຮັດວຽກໃຫ້ເປັນລະບົບ.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເບຣດບອດ, ຫຼອດ LED ສີແດງ/ເຫຼືອງ/ຂຽວ ຢ່າງລະ 1 ດວງ, ຕົວຕ້ານທານ 220Ω 3 ໂຕ, ສາຍຈຳເປີ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-2-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 2 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 2 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-2-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 2 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 2 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>LED ສີຂຽວ (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Pin 8</td><td>ສັນຍານໄປໄດ້</td></tr><tr><td>LED ສີເຫຼືອງ (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Pin 9</td><td>ສັນຍານລະວັງ / ກຽມຢຸດ</td></tr><tr><td>LED ສີແດງ (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Pin 10</td><td>ສັນຍານຢຸດ</td></tr><tr><td>ຂາສັ້ນຂອງ LED ທັງ 3 ດວງ</td><td>GND</td><td>ໃຊ້ແຖບລົບ (-) ຮ່ວມກັນເທິງເບຣດບອດໄດ້</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int greenLed = 8;
+int yellowLed = 9;
+int redLed = 10;
+
+void setup() {
+  pinMode(greenLed, OUTPUT);  // ຕັ້ງຂາ 8 ເປັນ Output
+  pinMode(yellowLed, OUTPUT); // ຕັ້ງຂາ 9 ເປັນ Output
+  pinMode(redLed, OUTPUT);    // ຕັ້ງຂາ 10 ເປັນ Output
+}
+
+void loop() {
+  // ໄລຍະໄຟຂຽວ 3 ວິນາທີ
+  digitalWrite(greenLed, HIGH);
+  digitalWrite(yellowLed, LOW);
+  digitalWrite(redLed, LOW);
+  delay(3000);
+
+  // ໄລຍະໄຟເຫຼືອງ 1 ວິນາທີ
+  digitalWrite(greenLed, LOW);
+  digitalWrite(yellowLed, HIGH);
+  digitalWrite(redLed, LOW);
+  delay(1000);
+
+  // ໄລຍະໄຟແດງ 3 ວິນາທີ
+  digitalWrite(greenLed, LOW);
+  digitalWrite(yellowLed, LOW);
+  digitalWrite(redLed, HIGH);
+  delay(3000);
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ໂຄ້ດຈະຄວບຄຸມໃຫ້ໄຟແຕ່ລະສີຕິດຕາມລຳດັບເວລາຄ້າຍໄຟຈາລະຈອນ. Challenge: ລອງເຮັດໃຫ້ໄຟເຫຼືອງກະພິບ 3 ຄັ້ງກ່ອນປ່ຽນເປັນໄຟແດງ.</p></article>
+<article class="lesson" id="lesson-3"><h3>ບົດທີ 3: ປຸ່ມກົດເປີດ-ປິດໄຟ (Digital Input &amp; Pull-down Resistor)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການອ່ານຄ່າສັນຍານ Input ຈາກປຸ່ມກົດ, ການໃຊ້ຄຳສັ່ງເງື່ອນໄຂ if / else ແລະ ຄວາມສຳຄັນຂອງຕົວຕ້ານທານ 10kΩ (Pull-down) ເພື່ອບໍ່ໃຫ້ຂາສັນຍານລອຍ.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເບຣດບອດ, ປຸ່ມກົດ Tactile Switch 1 ໂຕ, ຕົວຕ້ານທານ 10kΩ 1 ໂຕ, ຫຼອດ LED 1 ດວງ, ຕົວຕ້ານທານ 220Ω 1 ໂຕ, ສາຍຈຳເປີ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-3-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 3 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 3 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-3-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 3 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 3 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>ປຸ່ມກົດ ດ້ານຊ້າຍ</td><td>5V</td><td>ແຫຼ່ງໄຟບວກເມື່ອກົດປຸ່ມ</td></tr><tr><td>ປຸ່ມກົດ ດ້ານຂວາ</td><td>Pin 2 ແລະ ຂາໜຶ່ງຂອງ 10kΩ</td><td>ອີກຂາຂອງ 10kΩ ຕໍ່ລົງ GND ເພື່ອດຶງຄ່າໃຫ້ເປັນ 0 (LOW) ເວລາບໍ່ກົດ</td></tr><tr><td>LED (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Pin 13</td><td>ຂາສັ້ນຕໍ່ລົງ GND</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int buttonPin = 2; // ຂາຮັບສັນຍານປຸ່ມກົດ
+int ledPin = 13;   // ຂາຄວບຄຸມຫຼອດ LED
+
+void setup() {
+  pinMode(buttonPin, INPUT);  // ຕັ້ງຂາ 2 ເປັນ Input ເພື່ອອ່ານສະຖານະປຸ່ມ
+  pinMode(ledPin, OUTPUT);    // ຕັ້ງຂາ 13 ເປັນ Output ເພື່ອສັ່ງໄຟ LED
+}
+
+void loop() {
+  int buttonState = digitalRead(buttonPin); // ອ່ານຄ່າຈາກປຸ່ມ (HIGH ຫຼື LOW)
+
+  if (buttonState == HIGH) {        // ຖ້າມີການກົດປຸ່ມ (ຄ່າເປັນ HIGH)
+    digitalWrite(ledPin, HIGH);     // ເປີດໄຟ LED
+  } else {                          // ຖ້າບໍ່ໄດ້ກົດປຸ່ມ
+    digitalWrite(ledPin, LOW);      // ປິດໄຟ LED
+  }
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ເວລາປ່ອຍປຸ່ມ ຕົວຕ້ານທານ 10kΩ ຈະດຶງສັນຍານທີ່ Pin 2 ໃຫ້ເປັນ LOW ຢ່າງໝັ້ນຄົງ ໄຟຈຶ່ງດັບ; ພໍກົດປຸ່ມ ໄຟ 5V ຈະໄຫຼເຂົ້າ Pin 2 ເປັນ HIGH ໄຟ LED ຈຶ່ງຕິດ. Challenge: ລອງປ່ຽນເງື່ອນໄຂໃຫ້ໄຟຕິດຄ້າງໄວ້ 2 ວິນາທີຫຼັງກົດປຸ່ມ.</p></article>
+<article class="lesson" id="lesson-4"><h3>ບົດທີ 4: ໝຸນປຸ່ມປັບຄວາມສະຫວ່າງຫຼອດໄຟ (Analog Input &amp; PWM)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການອ່ານຄ່າ Analog Input (0-1023) ຈາກ Potentiometer 10kΩ ແລ້ວແປງຄ່າດ້ວຍ map() ໄປເປັນຄ່າ PWM (0-255) ເພື່ອປັບຄວາມສະຫວ່າງ LED ຜ່ານຄຳສັ່ງ analogWrite().</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເບຣດບອດ, Potentiometer 10kΩ 1 ໂຕ, ຫຼອດ LED 1 ດວງ, ຕົວຕ້ານທານ 220Ω 1 ໂຕ, ສາຍຈຳເປີ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-4-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 4 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 4 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-4-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 4 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 4 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>Potentiometer ຂາຊ້າຍ</td><td>5V</td><td>ແຮງດັນໄຟສູງສຸດ</td></tr><tr><td>Potentiometer ຂາກາງ (Wiper)</td><td>Analog Pin A0</td><td>ສົ່ງແຮງດັນທີ່ປ່ຽນແປງຕາມການໝຸນເຂົ້າຂາອ່ານ Analog</td></tr><tr><td>Potentiometer ຂາຂວາ</td><td>GND</td><td>ແຮງດັນ 0V</td></tr><tr><td>LED (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Digital Pin 9 (~9)</td><td>ຕ້ອງເປັນຂາທີ່ມີເຄື່ອງໝາຍ ~ (PWM) ຈຶ່ງໃຊ້ analogWrite ໄດ້</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int potPin = A0; // ຂາ Analog A0 ຮັບຄ່າຈາກ Potentiometer
+int ledPin = 9;  // ຂາ PWM 9 ສົ່ງສັນຍານປັບຄວາມສະຫວ່າງ LED
+
+void setup() {
+  pinMode(ledPin, OUTPUT); // ຕັ້ງຂາ 9 ເປັນ Output (ຂາ Analog A0 ບໍ່ຕ້ອງ pinMode)
+}
+
+void loop() {
+  int potValue = analogRead(potPin);                 // ອ່ານຄ່າ 0 - 1023
+  int brightness = map(potValue, 0, 1023, 0, 255);   // ແປງຊ່ວງ 0-1023 ເປັນ 0-255
+  analogWrite(ledPin, brightness);                   // ປັບຄວາມສະຫວ່າງ LED ຕາມຄ່າ brightness
+  delay(10);                                         // ພັກສັ້ນໆໃຫ້ລະບົບເຮັດວຽກລຽບ
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ການໝຸນປຸ່ມຈະປ່ຽນແຮງດັນທີ່ຂາ A0 ແລ້ວແປງເປັນຄ່າ 0–255 ເພື່ອກຳນົດ Duty Cycle ຂອງ PWM ທີ່ຂາ 9. Challenge: ເປີດ Serial Monitor (9600 baud) ແລ້ວໃຊ້ Serial.println(potValue) ເບິ່ງຄ່າຕົວເລກຕອນໝຸນປຸ່ມ.</p></article>
+<article class="lesson" id="lesson-5"><h3>ບົດທີ 5: ສ້າງສຽງເຕືອນໄພ (Active Buzzer)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການຄວບຄຸມ Active Buzzer 5V ເພື່ອສ້າງສຽງເຕືອນເຮັດວຽກຮ່ວມກັບຫຼອດ LED ແຈ້ງເຕືອນ.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເບຣດບອດ, Active Buzzer 5V 1 ໂຕ, ຫຼອດ LED ສີແດງ 1 ດວງ, ຕົວຕ້ານທານ 220Ω 1 ໂຕ, ສາຍຈຳເປີ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-5-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 5 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 5 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-5-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 5 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 5 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>Active Buzzer ຂາບວກ (+)</td><td>Pin 7</td><td>ສັ່ງ HIGH ເພື່ອໃຫ້ສຽງດັງ, LOW ເພື່ອໃຫ້ງຽບ</td></tr><tr><td>Active Buzzer ຂາລົບ (-)</td><td>GND</td><td>ສາຍລົບ (Ground)</td></tr><tr><td>LED ສີແດງ (ຂາຍາວ ຜ່ານ 220Ω)</td><td>Pin 13</td><td>ຂາສັ້ນຕໍ່ລົງ GND</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int buzzerPin = 7; // ຂາຄວບຄຸມ Buzzer
+int ledPin = 13;    // ຂາຄວບຄຸມໄຟເຕືອນ
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT); // ຕັ້ງຂາ 7 ເປັນ Output
+  pinMode(ledPin, OUTPUT);    // ຕັ້ງຂາ 13 ເປັນ Output
+}
+
+void loop() {
+  // ເປີດສຽງ ແລະ ໄຟເຕືອນ 200 ມິນລິວິນາທີ
+  digitalWrite(buzzerPin, HIGH);
+  digitalWrite(ledPin, HIGH);
+  delay(200);
+
+  // ປິດສຽງ ແລະ ໄຟເຕືອນ 200 ມິນລິວິນາທີ
+  digitalWrite(buzzerPin, LOW);
+  digitalWrite(ledPin, LOW);
+  delay(200);
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> Active Buzzer ມີວົງຈອນສ້າງຄວາມຖີ່ໃນໂຕ ຈຶ່ງໃຊ້ພຽງ digitalWrite(HIGH) ກໍດັງໄດ້ເລີຍ. Challenge: ລອງເຮັດສຽງເຕືອນແບບດັງ 2 ຄັ້ງຕິດກັນ ແລ້ວຢຸດງຽບ 1.5 ວິນາທີ.</p></article>
+<article class="lesson" id="lesson-6"><h3>ບົດທີ 6: ເຊັນເຊີວັດໄລຍະທາງອັດສະລິຍະ (Ultrasonic HC-SR04)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການໃຊ້ເຊັນເຊີວັດໄລຍະທາງ Ultrasonic HC-SR04 ອ່ານຄ່າໄລຍະທາງເປັນຊັງຕີແມັດ (cm) ສະແດງຜົນໃນ Serial Monitor ແລະ ສັ່ງ Buzzer ເຕືອນເມື່ອມີວັດຖຸເຂົ້າໃກ້.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເຊັນເຊີ Ultrasonic HC-SR04 1 ໂຕ, Active Buzzer 5V 1 ໂຕ, ສາຍຈຳເປີ ຜູ້-ເມຍ (M-F) ແລະ ຜູ້-ຜູ້ (M-M).</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-6-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 6 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 6 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-6-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 6 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 6 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>HC-SR04 VCC</td><td>5V</td><td>ໄຟລ້ຽງເຊັນເຊີ 5V</td></tr><tr><td>HC-SR04 Trig</td><td>Pin 5</td><td>ຂາສົ່ງສັນຍານກະຕຸ້ນໃຫ້ປ່ອຍຄື້ນສຽງ</td></tr><tr><td>HC-SR04 Echo</td><td>Pin 6</td><td>ຂາຮັບສັນຍານສະທ້ອນກັບມາ</td></tr><tr><td>HC-SR04 GND</td><td>GND</td><td>ສາຍລົບ (Ground)</td></tr><tr><td>Active Buzzer (+ / -)</td><td>Pin 7 / GND</td><td>ດັງເມື່ອໄລຍະທາງນ້ອຍກວ່າ 15 cm</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>int trigPin = 5;
+int echoPin = 6;
+int buzzerPin = 7;
+
+void setup() {
+  Serial.begin(9600);         // ເປີດການສື່ສານຜ່ານ Serial Monitor ທີ່ຄວາມໄວ 9600
+  pinMode(trigPin, OUTPUT);   // Trig ເປັນ Output
+  pinMode(echoPin, INPUT);    // Echo ເປັນ Input
+  pinMode(buzzerPin, OUTPUT); // Buzzer ເປັນ Output
+}
+
+void loop() {
+  // ປ່ອຍສັນຍານກະຕຸ້ນທີ່ຂາ Trig
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // ວັດໄລຍະເວລາທີ່ຂາ Echo ເປັນ HIGH (ໄປ-ກັບ)
+  long duration = pulseIn(echoPin, HIGH);
+  int distance = duration * 0.034 / 2; // ແປງເປັນໄລຍະທາງ (cm)
+
+  Serial.print(&quot;Distance: &quot;);
+  Serial.print(distance);
+  Serial.println(&quot; cm&quot;);
+
+  if (distance &gt; 0 &amp;&amp; distance &lt; 15) { // ຖ້າມີວັດຖຸໃກ້ກວ່າ 15 cm
+    digitalWrite(buzzerPin, HIGH);       // ສັ່ງ Buzzer ດັງ
+  } else {
+    digitalWrite(buzzerPin, LOW);        // ປິດສຽງ Buzzer
+  }
+
+  delay(200);
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ເຊັນເຊີສົ່ງຄື້ນອັລຕຣາໂຊນິກອອກໄປກະທົບວັດຖຸແລ້ວສະທ້ອນກັບມາ ໂຄ້ດຈະນຳເວລາທີ່ໄດ້ມາຄຳນວນເປັນໄລຍະທາງ (cm). Challenge: ລອງປ່ຽນໄລຍະເຕືອນເປັນ 30 cm ແລ້ວເພີ່ມຫຼອດ LED ໃຫ້ຕິດພ້ອມຕອນສຽງດັງ.</p></article>
+<article class="lesson" id="lesson-7"><h3>ບົດທີ 7: ຄວບຄຸມອົງສາເຊີໂວມໍເຕີ (Servo Motor SG90)</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ຮຽນຮູ້ການເອີ້ນໃຊ້ Library &lt;Servo.h&gt; ແລະ ຄຳສັ່ງ servo.write() ເພື່ອຄວບຄຸມໃຫ້ເຊີໂວມໍເຕີ SG90 ໝຸນໄປຫາອົງສາທີ່ຕ້ອງການ.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເຊີໂວມໍເຕີ SG90 1 ໂຕ, ສາຍຈຳເປີ ຜູ້-ຜູ້ (M-M) 3 ເສັ້ນ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-7-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 7 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 7 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-7-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 7 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 7 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>ສາຍສີນ້ຳຕານ (ຫຼື ສີດຳ)</td><td>GND</td><td>ສາຍລົບ (Ground)</td></tr><tr><td>ສາຍສີແດງ</td><td>5V</td><td>ໄຟລ້ຽງມໍເຕີ 5V</td></tr><tr><td>ສາຍສີສົ້ມ (ຫຼື ສີເຫຼືອງ)</td><td>Pin 3</td><td>ສາຍສັນຍານຄວບຄຸມອົງສາ</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>#include &lt;Servo.h&gt; // ເອີ້ນໃຊ້ໄລບຣາຣີສຳລັບຄວບຄຸມ Servo
+
+Servo myServo; // ສ້າງອອບເຈັກຊື່ myServo
+
+void setup() {
+  myServo.attach(3); // ກຳນົດໃຫ້ myServo ໃຊ້ສັນຍານທີ່ຂາ 3
+}
+
+void loop() {
+  myServo.write(0);  // ສັ່ງໝຸນໄປທີ່ 0 ອົງສາ
+  delay(1500);       // ລໍຖ້າ 1.5 ວິນາທີ
+
+  myServo.write(90); // ສັ່ງໝຸນໄປທີ່ 90 ອົງສາ
+  delay(1500);       // ລໍຖ້າ 1.5 ວິນາທີ
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> myServo.write(angle) ຮັບຄ່າອົງສາປະມານ 0 ຫາ 180 ອົງສາ ແລ້ວປັບຕຳແໜ່ງແກນໝຸນໃຫ້ກົງຕາມຄ່າ. Challenge: ລອງໃຫ້ເຊີໂວໝຸນໄປທີ່ 0, 45, 90 ແລະ 180 ອົງສາ ຕາມລຳດັບ.</p></article>
+<article class="lesson" id="lesson-8"><h3>ບົດທີ 8: ໂປຣເຈັກລວມ — ລະບົບໄມ້ກັ້ນທາງເຂົ້າ-ອອກ ຫຼື ຖັງຂີ້ເຫຍື້ອເປີດຝາອັດຕະໂນມັດ</h3><p><span class="label">(1) ຈຸດປະສົງຂອງບົດຮຽນ:</span> ນຳຄວາມຮູ້ຈາກບົດທີ 1–7 ມາເຊື່ອມຕໍ່ ແລະ ຂຽນໂຄ້ດຮ່ວມກັນເປັນລະບົບຈຳລອງທີ່ເຮັດວຽກໄດ້ຈິງ: ເມື່ອມີວັດຖຸເຂົ້າໃກ້ເຊັນເຊີ ຈະແຈ້ງສຽງ/ໄຟ ແລ້ວສັ່ງເຊີໂວເປີດໄມ້ກັ້ນ ຫຼື ຝາຖັງຂີ້ເຫຍື້ອ.</p><p class="parts"><span class="label">(2) ອຸປະກອນທີ່ໃຊ້ໃນບົດນີ້:</span> ບອດ Arduino UNO R3, ເບຣດບອດ, Ultrasonic HC-SR04, Servo SG90, LED ສີຂຽວ ແລະ ສີແດງ (ຢ່າງລະ 1 ດວງ), ຕົວຕ້ານທານ 220Ω 2 ໂຕ, Active Buzzer 5V, ສາຍຈຳເປີ.</p>
+<div class="slot-pair"><div class="slot half" data-slot="lesson-8-diagram" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 8 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 8 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div><div class="slot half" data-slot="lesson-8-photo" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 8 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)">
+      <div class="slot-placeholder"><span class="slot-symbol" aria-hidden="true">▧</span><span>ຂະໜາດຊ່ອງວ່າງຮູບຕໍ່ວົງຈອນ ບົດທີ 8 (Fritzing/Tinkercad ແລະ ຮູບຕໍ່ຈິງ): ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 10 ຊມ. (ວາງຄູ່ 2 ຮູບ ຮູບລະປະມານ 8 x 9.5 ຊມ.)</span><small>~17 × 10 cm</small></div>
+      <img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" hidden>
+    </div></div>
+<div class="wiring"><h4>ຕາຕະລາງການຕໍ່ສາຍ</h4><div class="table-wrap"><table><thead><tr><th>ອຸປະກອນ / ຂາ</th><th>ຕໍ່ໄປທີ່</th><th>ໜ້າທີ່ / ໝາຍເຫດ</th></tr></thead><tbody><tr><td>HC-SR04 (VCC / Trig / Echo / GND)</td><td>5V / Pin 5 / Pin 6 / GND</td><td>ກວດຈັບວັດຖຸ ຫຼື ມືທີ່ເຂົ້າໃກ້</td></tr><tr><td>Servo SG90 (ສັນຍານ / ໄຟ / GND)</td><td>Pin 3 / 5V / GND</td><td>ຍົກໄມ້ກັ້ນ ຫຼື ເປີດຝາຖັງ (0° ປິດ / 90° ເປີດ)</td></tr><tr><td>LED ສີຂຽວ (ຜ່ານ 220Ω)</td><td>Pin 8</td><td>ໄຟສະຖານະເປີດ / ອະນຸຍາດ</td></tr><tr><td>LED ສີແດງ (ຜ່ານ 220Ω)</td><td>Pin 10</td><td>ໄຟສະຖານະປິດ / ລໍຖ້າ</td></tr><tr><td>Active Buzzer (+ / -)</td><td>Pin 7 / GND</td><td>ສົ່ງສຽງແຈ້ງເຕືອນສັ້ນໆເມື່ອເລີ່ມເປີດ</td></tr></tbody></table></div></div>
+<h4>(3) ໂຄ້ດຕົວຢ່າງພ້ອມຄຳອະທິບາຍພາສາລາວ:</h4><div class="codebox"><div class="codehead"><button class="copy" type="button">ກັອບປີ້ໂຄ້ດ</button></div><pre><code>#include &lt;Servo.h&gt;
+
+Servo gateServo;
+int trigPin = 5;
+int echoPin = 6;
+int buzzerPin = 7;
+int greenLed = 8;
+int redLed = 10;
+
+void setup() {
+  gateServo.attach(3);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(greenLed, OUTPUT);
+  pinMode(redLed, OUTPUT);
+
+  // ສະຖານະເລີ່ມຕົ້ນ: ປິດໄມ້ກັ້ນ/ຝາ ແລະ ເປີດໄຟແດງ
+  gateServo.write(0);
+  digitalWrite(redLed, HIGH);
+  digitalWrite(greenLed, LOW);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  int distance = duration * 0.034 / 2;
+
+  if (distance &gt; 0 &amp;&amp; distance &lt; 15) {
+    // ປ່ຽນເປັນສະຖານະເປີດ
+    digitalWrite(redLed, LOW);
+    digitalWrite(greenLed, HIGH);
+
+    // ສົ່ງສຽງແຈ້ງເຕືອນສັ້ນໆ 150 ms
+    digitalWrite(buzzerPin, HIGH);
+    delay(150);
+    digitalWrite(buzzerPin, LOW);
+
+    gateServo.write(90); // ໝຸນເປີດ 90 ອົງສາ
+    delay(3000);         // ຄ້າງໄວ້ 3 ວິນາທີ
+
+    // ກັບຄືນສູ່ສະຖານະປິດ
+    gateServo.write(0);
+    digitalWrite(greenLed, LOW);
+    digitalWrite(redLed, HIGH);
+  }
+
+  delay(100);
+}</code></pre></div>
+<p class="principle"><span class="label">(4) ຫຼັກການເຮັດວຽກ ແລະ ລອງປັບແຕ່ງເອງ:</span> ລະບົບຈະກວດຈັບໄລຍະທາງຢູ່ຕະຫຼອດ ເມື່ອວັດຖຸເຂົ້າໃກ້ໜ້ອຍກວ່າ 15 cm ຈະປິດໄຟແດງ ເປີດໄຟຂຽວ ສົ່ງສຽງສັ້ນໆ ແລ້ວເປີດເຊີໂວໄປ 90 ອົງສາເປັນເວລາ 3 ວິນາທີ ກ່ອນປິດກັບຄືນ. Challenge: ລອງປັບເວລາຄ້າງໄວ້ເປັນ 5 ວິນາທີ ແລະ ປ່ຽນອົງສາເປີດເປັນ 120 ອົງສາ.</p></article>
+</section><section><h2>ພາກທີ 5: ການແກ້ໄຂບັນຫາເບື້ອງຕົ້ນທີ່ພົບເລື້ອຍ <span lang="en">(Troubleshooting FAQ)</span></h2>
+<div class="slot faq1" data-slot="faq-error" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕົວຢ່າງ Error / ການຕໍ່ສາຍ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 8 ຊມ."><div class="slot-placeholder"><span>ຂະໜາດຊ່ອງວ່າງຮູບຕົວຢ່າງ Error / ການຕໍ່ສາຍ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 8 ຊມ.</span><small>~17 × 8 cm</small></div><img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div><input type="file" accept="image/png,image/jpeg,image/webp" hidden></div>
+<div class="slot faq2" data-slot="faq-contact" aria-label="ຂະໜາດຊ່ອງວ່າງຂໍ້ມູນສ່ວນຕົວ / ຊ່ອງທາງຕິດຕໍ່ຊ່ວຍເຫຼືອ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 5 ຊມ."><div class="slot-placeholder"><span>ຂະໜາດຊ່ອງວ່າງຂໍ້ມູນສ່ວນຕົວ / ຊ່ອງທາງຕິດຕໍ່ຊ່ວຍເຫຼືອ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 5 ຊມ.</span><small>~17 × 5 cm</small></div><img alt="" hidden><div class="slot-controls"><button type="button" data-replace>Replace</button><button type="button" data-remove>Remove</button></div><input type="file" accept="image/png,image/jpeg,image/webp" hidden></div></section>
+<footer>Arduino UNO R3 · Kit A</footer></main>
+<script>
+(()=>{
+  const doc=document.documentElement;
+  const params=new URLSearchParams(location.search);
+  let edit=params.get('edit')==='1';
+  const stateNode=document.getElementById('embedded-images');
+  let images={};
+  try{images=JSON.parse(stateNode.textContent||'{}')}catch{}
+  const setMode=()=>{
+    doc.classList.toggle('edit-mode',edit);
+    document.querySelectorAll('.slot').forEach(slot=>{
+      const h=slot._slotHandlers;
+      if(edit&&!h){
+        const input=slot.querySelector('input[type=file]');
+        const click=e=>{if(e.target===input||e.target.closest('button'))return;input.click();};
+        const over=e=>{e.preventDefault();slot.style.background='#f1f0ec';};
+        const leave=()=>slot.style.background='';
+        const drop=e=>{e.preventDefault();slot.style.background='';const f=e.dataTransfer.files[0];if(f&&/^image\/(png|jpeg|webp)$/.test(f.type)){const r=new FileReader();r.onload=()=>storeImage(slot,r.result);r.readAsDataURL(f);}};
+        const change=()=>{const f=input.files&&input.files[0];if(f){const r=new FileReader();r.onload=()=>storeImage(slot,r.result);r.readAsDataURL(f);}input.value='';};
+        const replace=e=>{e.stopPropagation();input.click();};
+        const remove=e=>{e.stopPropagation();removeImage(slot);};
+        slot.addEventListener('click',click);slot.addEventListener('dragover',over);slot.addEventListener('dragleave',leave);slot.addEventListener('drop',drop);input.addEventListener('change',change);
+        slot.querySelector('[data-replace]').addEventListener('click',replace);slot.querySelector('[data-remove]').addEventListener('click',remove);
+        slot._slotHandlers={click,over,leave,drop,change,replace,remove};
+      }else if(!edit&&h){
+        const input=slot.querySelector('input[type=file]');
+        slot.removeEventListener('click',h.click);slot.removeEventListener('dragover',h.over);slot.removeEventListener('dragleave',h.leave);slot.removeEventListener('drop',h.drop);input.removeEventListener('change',h.change);
+        slot.querySelector('[data-replace]').removeEventListener('click',h.replace);slot.querySelector('[data-remove]').removeEventListener('click',h.remove);delete slot._slotHandlers;slot.style.background='';
+      }
+    });
+  };
+  setMode();
+  function storeImage(slot,data){images[slot.dataset.slot]=data;slot.querySelector('img').src=data;slot.querySelector('img').hidden=false;slot.classList.add('has-image');stateNode.textContent=JSON.stringify(images);}
+  function removeImage(slot){delete images[slot.dataset.slot];slot.querySelector('img').removeAttribute('src');slot.querySelector('img').hidden=true;slot.classList.remove('has-image');stateNode.textContent=JSON.stringify(images);}
+  document.querySelectorAll('.slot').forEach(slot=>{
+    if(images[slot.dataset.slot])storeImage(slot,images[slot.dataset.slot]);
+  });
+  document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
+    const code=btn.closest('.codebox').querySelector('code').textContent;
+    try{await navigator.clipboard.writeText(code);}catch{const t=document.createElement('textarea');t.value=code;document.body.append(t);t.select();document.execCommand('copy');t.remove();}
+    const old=btn.textContent;btn.textContent='ກັອບປີ້ແລ້ວ';setTimeout(()=>btn.textContent=old,1300);
+  }));
+  addEventListener('keydown',e=>{
+    if(e.altKey&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();edit=!edit;params.set('edit',edit?'1':'0');const q=params.get('edit')==='0'?'':params.toString();history.replaceState(null,'',location.pathname+(q?'?'+q:'')+location.hash);setMode();}
+    if(edit&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();stateNode.textContent=JSON.stringify(images);const blob=new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+  });
+})();
+</script></body></html>
