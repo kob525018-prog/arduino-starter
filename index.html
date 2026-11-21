@@ -15,6 +15,7 @@ h1,h2,h3,h4,p{margin-top:0}h1{font-size:30px;line-height:1.55;font-weight:700;le
 section{margin-top:48px;break-inside:auto}.lesson{padding-top:27px;border-top:1px solid var(--line);margin-top:35px}.lesson h3{font-size:18px}.label{font-weight:600}.parts{margin:0 0 14px}.wiring{margin-top:16px}.table-wrap{overflow-x:auto;margin:12px 0 20px}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.65}th,td{padding:9px 10px;text-align:left;vertical-align:top;border:1px solid var(--line)}th{background:#f3f2ee;font-weight:600}tbody tr:nth-child(even){background:#fcfbf9}
 .slot{position:relative;border:1px dashed #c7c5bf;background:#fbfaf8;color:#656a6c;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;margin:12px 0 20px;aspect-ratio:16/9;min-height:0}.slot.wide,.slot.setup,.slot.faq1,.slot.faq2{aspect-ratio:16/9}.slot-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.slot.half{aspect-ratio:16/9;min-height:0;margin:8px 0 16px}.slot-placeholder{display:flex;flex-direction:column;align-items:center;gap:5px;padding:18px;max-width:100%;font-size:13px;line-height:1.65}.slot-placeholder small{font-family:"JetBrains Mono",monospace;font-size:11px;color:#858987}.slot-symbol{font-size:22px;color:#9a9d99}.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fbfaf8}.slot img:not([hidden])~.slot-placeholder{display:none}.slot-controls{display:none;position:absolute;right:8px;top:8px;gap:6px}.slot-controls button{border:1px solid #c8c7c0;background:#fff;color:#222;padding:5px 9px;font-family:inherit;font-size:12px;cursor:pointer}.codebox{margin:14px 0 20px;border:1px solid #d9d8d3;background:#f7f7f5}.codehead{display:flex;justify-content:flex-end;padding:6px 8px;border-bottom:1px solid #e4e3de}.copy{background:transparent;border:1px solid #d1d0ca;border-radius:2px;padding:4px 10px;color:#353a3d;font:13px "Noto Sans Lao",sans-serif;cursor:pointer}.copy:hover{background:#eeede8}pre{margin:0;padding:15px 17px;overflow:auto;font:12px/1.65 "JetBrains Mono",monospace;color:#242a2c;tab-size:2}code{font-family:"JetBrains Mono",monospace}.step{margin:13px 0}.step-title{font-weight:600}.principle{margin:18px 0}.challenge{font-weight:600}.edit-only{display:none}.edit-mode .edit-only{display:inline}.edit-mode .slot{cursor:pointer}.edit-mode .slot:hover .slot-controls,.edit-mode .slot:focus-within .slot-controls{display:flex}.slot.has-image .slot-placeholder{display:none}.edit-mode .slot.has-image img{display:block}.edit-mode .slot.has-image{border-style:solid}
 footer{margin-top:44px;padding-top:12px;border-top:1px solid var(--line);color:#777;font-size:12px;text-align:center}
+.slot img{cursor:zoom-in}.edit-mode .slot img{cursor:default}.image-viewer{display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.9);cursor:zoom-out}.image-viewer.open{display:flex}.image-viewer img{display:block;max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 40px #0008}.viewer-close{position:absolute;top:16px;right:20px;width:44px;height:44px;border:1px solid #ffffff80;border-radius:50%;background:#17191be8;color:#fff;font:32px/1 sans-serif;cursor:pointer}.viewer-close:hover{background:#393d40}
 @media(max-width:700px){body{background:#fff;font-size:14px}.sheet{margin:0 auto;border:0;padding:32px 20px;box-shadow:none}h1{font-size:24px}h2{font-size:20px}h3{font-size:17px}.slot-pair{gap:8px}pre{font-size:11px;padding:12px}.slot-placeholder{font-size:11px;padding:10px}}
 @media print{body{background:#fff}.sheet{max-width:none;margin:0;border:0;box-shadow:none;padding:12mm 13mm}.copy,.slot-controls{display:none!important}section{break-before:auto}.lesson{break-inside:avoid}a{color:inherit;text-decoration:none}.slot{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 </style>
@@ -333,6 +334,7 @@ void loop() {
 </section><section><h2>ພາກທີ 5: ການແກ້ໄຂບັນຫາເບື້ອງຕົ້ນທີ່ພົບເລື້ອຍ <span lang="en">(Troubleshooting FAQ)</span></h2>
 <div class="slot faq1" data-slot="faq-error" aria-label="ຂະໜາດຊ່ອງວ່າງຮູບຕົວຢ່າງ Error / ການຕໍ່ສາຍ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 8 ຊມ."><div class="slot-placeholder"><span>ຂະໜາດຊ່ອງວ່າງຮູບຕົວຢ່າງ Error / ການຕໍ່ສາຍ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 8 ຊມ.</span><small>~17 × 8 cm</small></div><img alt="" hidden=""><div class="slot-controls"><button type="button" data-replace="">Replace</button><button type="button" data-remove="">Remove</button></div><input type="file" accept="image/png,image/jpeg,image/webp" hidden=""></div>
 <div class="slot faq2" data-slot="faq-contact" aria-label="ຂະໜາດຊ່ອງວ່າງຂໍ້ມູນສ່ວນຕົວ / ຊ່ອງທາງຕິດຕໍ່ຊ່ວຍເຫຼືອ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 5 ຊມ."><div class="slot-placeholder"><span>ຂະໜາດຊ່ອງວ່າງຂໍ້ມູນສ່ວນຕົວ / ຊ່ອງທາງຕິດຕໍ່ຊ່ວຍເຫຼືອ: ກວ້າງເຕັມໜ້າ (ປະມານ 17 ຊມ.) x ສູງປະມານ 5 ຊມ.</span><small>~17 × 5 cm</small></div><img alt="" hidden=""><div class="slot-controls"><button type="button" data-replace="">Replace</button><button type="button" data-remove="">Remove</button></div><input type="file" accept="image/png,image/jpeg,image/webp" hidden=""></div></section>
+<div class="image-viewer" id="image-viewer" role="dialog" aria-modal="true" aria-label="Expanded image"><button class="viewer-close" type="button" aria-label="Close enlarged image">×</button><img alt=""></div>
 <footer>Arduino UNO R3 · Kit A</footer></main>
 <script>
 (()=>{
@@ -371,12 +373,21 @@ void loop() {
   document.querySelectorAll('.slot').forEach(slot=>{
     if(images[slot.dataset.slot])storeImage(slot,images[slot.dataset.slot]);
   });
+  const viewer=document.getElementById('image-viewer');
+  const viewerImage=viewer.querySelector('img');
+  const closeViewer=()=>{viewer.classList.remove('open');viewerImage.removeAttribute('src');document.body.style.overflow='';};
+  document.querySelectorAll('.slot img').forEach(img=>img.addEventListener('click',e=>{
+    if(edit)return;
+    e.stopPropagation();viewerImage.src=img.src;viewerImage.alt=img.alt||'Expanded image';viewer.classList.add('open');document.body.style.overflow='hidden';viewer.querySelector('.viewer-close').focus();
+  }));
+  viewer.addEventListener('click',e=>{if(e.target===viewer||e.target.closest('.viewer-close'))closeViewer();});
   document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{
     const code=btn.closest('.codebox').querySelector('code').textContent;
     try{await navigator.clipboard.writeText(code);}catch{const t=document.createElement('textarea');t.value=code;document.body.append(t);t.select();document.execCommand('copy');t.remove();}
     const old=btn.textContent;btn.textContent='ກັອບປີ້ແລ້ວ';setTimeout(()=>btn.textContent=old,1300);
   }));
   addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&viewer.classList.contains('open')){closeViewer();return;}
     if(e.altKey&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();edit=!edit;params.set('edit',edit?'1':'0');const q=params.get('edit')==='0'?'':params.toString();history.replaceState(null,'',location.pathname+(q?'?'+q:'')+location.hash);setMode();}
     if(edit&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();stateNode.textContent=JSON.stringify(images);const blob=new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
   });
